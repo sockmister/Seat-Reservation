@@ -7,7 +7,6 @@ public class BookingClerk implements Runnable{
 	private boolean [] seats;
 	int readers;
 	boolean writer;
-	//int turn;	
 	
 	//methods
 	public BookingClerk(int capacity){
@@ -17,7 +16,6 @@ public class BookingClerk implements Runnable{
 		}
 		readers = 0;
 		writer = false;
-		//turn = READ_TURN;
 	}
 	
 	@Override
@@ -26,19 +24,17 @@ public class BookingClerk implements Runnable{
 	} 
 	
 	public synchronized boolean[] getSeats() throws InterruptedException{
-		System.out.println("readers: " + readers + " writers: " + writer);// + " turn: " + turn);
+		System.out.println("readers: " + readers + " writers: " + writer);
 		while(writer == true ) wait(); 
 		readers++;
 		boolean [] toReturn = seats;
 		readers--;
-		//if(readers == 0)
-		//	turn = WRITE_TURN;
 		notifyAll();
 		return toReturn;
 	}
 	
 	public synchronized boolean bookSeats(int [] seatsBooking) throws InterruptedException{
-		System.out.println("readers: " + readers + " writers: " + writer);// + " turn: " + turn);
+		System.out.println("readers: " + readers + " writers: " + writer);
 		while(writer == true && readers > 0 ) wait();
 		
 		writer=true;
@@ -56,7 +52,6 @@ public class BookingClerk implements Runnable{
 			seats[seatsBooking[i]]= true;
 		}
 		writer=false;
-		//turn = READ_TURN;
 		notifyAll();
 		
 		return true;
@@ -69,8 +64,6 @@ public class BookingClerk implements Runnable{
 			System.out.println("seat number " + i + ": " + seats[i]);
 		}
 		readers--;
-		//if(readers == 0)
-		//	turn = WRITE_TURN;
 		notifyAll();
 	}
 }
