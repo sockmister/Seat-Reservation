@@ -1,8 +1,8 @@
 
 public class Driver {
 	public static void main(String [] args){
-		final int CAPACITY = 500;
-		final int USERS_NO = 200;
+		final int CAPACITY = 10;
+		final int USERS_NO = 8;
 		
 		BookingClerk bc = new BookingClerk(CAPACITY);
 		System.out.println("starting clerk thread...");
@@ -17,6 +17,7 @@ public class Driver {
 		
 		try{
 			Thread.sleep(1000);
+			//print out all seats and whether they are booked.
 			System.out.println("printing..");
 			bc.printSeats();
 		} catch (Exception ex){
